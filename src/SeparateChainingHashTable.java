@@ -38,8 +38,22 @@ public class SeparateChainingHashTable<AnyType> {
      * @param x the item to insert.
      */
     public void insert(AnyType x) {
-        // FINISH ME
+        // 1. Compute which bucket this key should go to
+        List<AnyType> whichList = theLists[ myhash(x) ];
+
+        // 2. If the bucket does NOT already contain x, insert it
+        if (!whichList.contains(x)) {
+            whichList.add(x);
+            currentSize++;
+
+            // 3. If currentSize is larger than the number of buckets,
+            //    grow the table and rehash
+            if (currentSize > theLists.length) {
+                rehash();
+            }
+        }
     }
+
 
     /**
      * Remove from the hash table.
@@ -47,8 +61,14 @@ public class SeparateChainingHashTable<AnyType> {
      * @param x the item to remove.
      */
     public void remove(AnyType x) {
-        // FINISH ME
+        List<AnyType> whichList = theLists[ myhash(x) ];
+
+        // List.remove(Object o) returns true if it actually removed something
+        if (whichList.remove(x)) {
+            currentSize--;
+        }
     }
+
 
     /**
      * Find an item in the hash table.
@@ -57,15 +77,21 @@ public class SeparateChainingHashTable<AnyType> {
      * @return true if x is not found.
      */
     public boolean contains(AnyType x) {
-        // FINISH ME
+        List<AnyType> whichList = theLists[ myhash(x) ];
+        return whichList.contains(x);
     }
+
 
     /**
      * Make the hash table logically empty.
      */
     public void makeEmpty() {
-        // FINISH ME
+        for (int i = 0; i < theLists.length; i++) {
+            theLists[i].clear();
+        }
+        currentSize = 0;
     }
+
 
     /**
      * A hash routine for String objects.
@@ -88,8 +114,24 @@ public class SeparateChainingHashTable<AnyType> {
     }
 
     private void rehash() {
-        // FINISH ME
+        // 1. Save a reference to the old table
+        List<AnyType>[] oldLists = theLists;
+
+        // 2. Allocate a new, larger table
+        theLists = new LinkedList[ nextPrime(2 * oldLists.length) ];
+        for (int i = 0; i < theLists.length; i++) {
+            theLists[i] = new LinkedList<>();
+        }
+
+        // 3. Reset size and re-insert everything
+        currentSize = 0;
+        for (List<AnyType> list : oldLists) {
+            for (AnyType x : list) {
+                insert(x);   // will go into correct bucket in the new table
+            }
+        }
     }
+
 
     private int myhash(AnyType x) {
         int hashVal = x.hashCode();
