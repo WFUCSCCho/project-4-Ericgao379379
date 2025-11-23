@@ -1,6 +1,11 @@
 import java.util.LinkedList;
 import java.util.List;
-
+///∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗*
+//∗ @file: SeparateChainingHashTable.java
+//∗ @description: The program makes a generic hash table
+//∗ @author: Eric
+//∗ @date: November 23, 2025
+//∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗/
 // SeparateChaining Hash table class
 //
 // CONSTRUCTION: an approximate initial size or default of 101
@@ -38,8 +43,21 @@ public class SeparateChainingHashTable<AnyType> {
      * @param x the item to insert.
      */
     public void insert(AnyType x) {
-        // FINISH ME
+        // Compute which bucket
+        List<AnyType> whichList = theLists[ myhash(x) ];
+
+        // insert it if not contained
+        if (!whichList.contains(x)) {
+            whichList.add(x);
+            currentSize++;
+
+            // if not enough size, rehash
+            if (currentSize > theLists.length) {
+                rehash();
+            }
+        }
     }
+
 
     /**
      * Remove from the hash table.
@@ -47,8 +65,14 @@ public class SeparateChainingHashTable<AnyType> {
      * @param x the item to remove.
      */
     public void remove(AnyType x) {
-        // FINISH ME
+        List<AnyType> whichList = theLists[ myhash(x) ];
+
+        // List.remove(Object o) returns true if it actually removed something
+        if (whichList.remove(x)) {
+            currentSize--;
+        }
     }
+
 
     /**
      * Find an item in the hash table.
@@ -57,15 +81,21 @@ public class SeparateChainingHashTable<AnyType> {
      * @return true if x is not found.
      */
     public boolean contains(AnyType x) {
-        // FINISH ME
+        List<AnyType> whichList = theLists[ myhash(x) ];
+        return whichList.contains(x);
     }
+
 
     /**
      * Make the hash table logically empty.
      */
     public void makeEmpty() {
-        // FINISH ME
+        for (int i = 0; i < theLists.length; i++) {
+            theLists[i].clear();
+        }
+        currentSize = 0;
     }
+
 
     /**
      * A hash routine for String objects.
@@ -88,8 +118,24 @@ public class SeparateChainingHashTable<AnyType> {
     }
 
     private void rehash() {
-        // FINISH ME
+        // Save old table
+        List<AnyType>[] oldLists = theLists;
+
+        // Allocate a new, larger table
+        theLists = new LinkedList[ nextPrime(2 * oldLists.length) ];
+        for (int i = 0; i < theLists.length; i++) {
+            theLists[i] = new LinkedList<>();
+        }
+
+        // resize
+        currentSize = 0;
+        for (List<AnyType> list : oldLists) {
+            for (AnyType x : list) {
+                insert(x);   // will go into correct bucket in the new table
+            }
+        }
     }
+
 
     private int myhash(AnyType x) {
         int hashVal = x.hashCode();
