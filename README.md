@@ -82,20 +82,27 @@ it to this repository.
 
 Insertion, search, and deletion running time (already sorted):
 
-![Firefly picture of a cat 86147](https://github.com/user-attachments/assets/8b2d008e-3011-4979-97b8-fa2e9886a01a)
+<img width="654" height="386" alt="image" src="https://github.com/user-attachments/assets/5fa753b8-c878-4698-8248-5aabf4914bc1" />
+
 
 
 Insertion, search, and deletion running time (shuffled):
+<img width="654" height="386" alt="image" src="https://github.com/user-attachments/assets/7fc3dca8-1614-4e54-a8a6-00180d5bf674" />
+
+
 
 Insertion, search, and deletion running time (reversed):
+<img width="654" height="386" alt="image" src="https://github.com/user-attachments/assets/dddeede9-9df1-4a29-ade6-d905244a08c2" />
+
+
 
 ## 5. **Document your Dataset and Results**
 Document the source of your dataset and any modifications you made to it. Describe the results of your analysis and 
 how it compares to the theoretical performance of the hash table operations.
 
-Dataset Source: // FINISH ME
-Dataset Modifications ("None" if unchanged): // FINISH ME
-Result Analysis: // FINISH ME
+Dataset Source: [// FINISH ME](https://www.kaggle.com/datasets/tawfikelmetwally/automobile-dataset)
+Dataset Modifications: None
+Result Analysis: It is about O(1) on average for the circumstances, yet it suffers from O(n) on worst cases.
 
 ## Submission:
 
