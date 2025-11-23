@@ -1,6 +1,11 @@
 import java.util.LinkedList;
 import java.util.List;
-
+///∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗*
+//∗ @file: SeparateChainingHashTable.java
+//∗ @description: The program makes a generic hash table
+//∗ @author: Eric
+//∗ @date: November 23, 2025
+//∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗∗/
 // SeparateChaining Hash table class
 //
 // CONSTRUCTION: an approximate initial size or default of 101
@@ -38,16 +43,15 @@ public class SeparateChainingHashTable<AnyType> {
      * @param x the item to insert.
      */
     public void insert(AnyType x) {
-        // 1. Compute which bucket this key should go to
+        // Compute which bucket
         List<AnyType> whichList = theLists[ myhash(x) ];
 
-        // 2. If the bucket does NOT already contain x, insert it
+        // insert it if not contained
         if (!whichList.contains(x)) {
             whichList.add(x);
             currentSize++;
 
-            // 3. If currentSize is larger than the number of buckets,
-            //    grow the table and rehash
+            // if not enough size, rehash
             if (currentSize > theLists.length) {
                 rehash();
             }
@@ -114,16 +118,16 @@ public class SeparateChainingHashTable<AnyType> {
     }
 
     private void rehash() {
-        // 1. Save a reference to the old table
+        // Save old table
         List<AnyType>[] oldLists = theLists;
 
-        // 2. Allocate a new, larger table
+        // Allocate a new, larger table
         theLists = new LinkedList[ nextPrime(2 * oldLists.length) ];
         for (int i = 0; i < theLists.length; i++) {
             theLists[i] = new LinkedList<>();
         }
 
-        // 3. Reset size and re-insert everything
+        // resize
         currentSize = 0;
         for (List<AnyType> list : oldLists) {
             for (AnyType x : list) {
