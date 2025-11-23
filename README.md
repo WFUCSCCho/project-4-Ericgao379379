@@ -100,9 +100,11 @@ Insertion, search, and deletion running time (reversed):
 Document the source of your dataset and any modifications you made to it. Describe the results of your analysis and 
 how it compares to the theoretical performance of the hash table operations.
 
-Dataset Source: [// FINISH ME](https://www.kaggle.com/datasets/tawfikelmetwally/automobile-dataset)
+Dataset Source:(https://www.kaggle.com/datasets/tawfikelmetwally/automobile-dataset)
+
 Dataset Modifications: None
-Result Analysis: It is about O(1) on average for the circumstances, yet it suffers from O(n) on worst cases.
+
+Result Analysis: The results confirm that the separate chaining hash table implementation works correctly and demonstrates the expected average-case O(1) performance for insert, search, and delete operations. The experiment also shows that input ordering has minimal impact on hash table efficiency, reinforcing the robustness of hashing as a data structure for large-scale key-value insertions and lookups.
 
 ## Submission:
 
